@@ -38,14 +38,14 @@
                 <form method="POST" novalidate=novalidate>
                     <div class="mb-3">
                         <label for="prenom" class="form-label">Prénom</label>
-                        <input type="text" class="form-control <?= isset($utilisateur) && $utilisateur['prenom'] === '' ? 'is-invalid' : '' ?>" id="prenom" name="prenom" required value="<?= (isset($utilisateur['prenom'])) ? $utilisateur['prenom'] : '' ?>">
+                        <input type="text" class="form-control <?= isset($auteur) && $auteur['prenom'] === '' ? 'is-invalid' : '' ?>" id="prenom" name="prenom" required value="<?= $auteur['prenom'] ?? '' ?>">
                         <div class="invalid-feedback">
                             Veuillez saisir votre prénom.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="nom" class="form-label">Nom</label>
-                        <input type="text" class="form-control <?= isset($utilisateur) && $utilisateur['nom'] === '' ? 'is-invalid' : '' ?>" id="nom" name="nom" required value="<?= (isset($utilisateur['nom'])) ? $utilisateur['nom'] : '' ?>">
+                        <input type="text" class="form-control <?= isset($auteur) && $auteur['nom'] === '' ? 'is-invalid' : '' ?>" id="nom" name="nom" required value="<?= $auteur['nom'] ?? '' ?>">
                         <div class="invalid-feedback">
                             Veuillez saisir votre nom.
                         </div>
@@ -61,14 +61,14 @@
                     ?>
                     <div class="mb-3">
                         <label for="email" class="form-label">Adresse e-mail</label>
-                        <input type="email" class="form-control <?= isset($utilisateur) && $utilisateur['email'] === false ? 'is-invalid' : '' ?>" id="email" name="email" required value="<?= (isset($utilisateur['email'])) ? $utilisateur['email'] : '' ?>">
+                        <input type="email" class="form-control <?= isset($auteur) && $auteur['email'] === false ? 'is-invalid' : '' ?>" id="email" name="email" required value="<?= $auteur['email'] ?? '' ?>">
                         <div class="invalid-feedback">
                             Veuillez saisir une adresse e-mail valide.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="motDePasse" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control <?= isset($utilisateur) && $utilisateur['motDePasse'] === false ? 'is-invalid' : '' ?>" id="motDePasse" name="motDePasse" required">
+                        <input type="password" class="form-control <?= isset($auteur) && $auteur['motDePasse'] === false ? 'is-invalid' : '' ?>" id="motDePasse" name="motDePasse" required">
                         <div class="invalid-feedback">
                             Veuillez saisir un mot de passe sécurisé d'au moins 8 caractères, avec au moins une majuscule, une minuscule et un chiffre.
                         </div>
