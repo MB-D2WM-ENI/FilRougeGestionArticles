@@ -6,15 +6,16 @@ use App\Database\Database;
 use App\Entity\Auteur;
 
 class AuteurRepository {
-    public static function insert(Auteur $auteur) {
+    public static function insert(Auteur $auteur): void {
         $connection = Database::getInstance();
         $connection->execute(
-            "INSERT INTO auteurs (nom, prenom, email, mot_de_passe) VALUES (?, ?, ?, ?)",
+            "INSERT INTO auteurs (nom, prenom, email, mot_de_passe, role) VALUES (?, ?, ?, ?, ?)",
             [
                 $auteur->getNom(),
                 $auteur->getPrenom(),
                 $auteur->getEmail(),
                 $auteur->getMotDePasse(),
+                $auteur->getRole(),
             ]
         );
     }
@@ -41,5 +42,15 @@ class AuteurRepository {
             return null;
         }
         return Auteur::hydrate($auteur);
+    }
+
+    public static function findAll(): array {
+        $connection = Database::getInstance();
+        $sql = "SELECT * FROM auteurs";
+        $auteurs = $connection->query($sql);
+        foreach ($auteurs as $key => $auteur) {
+            $auteurs[$key] = Auteur::hydrate($auteur);
+        }
+        return $auteurs;
     }
 }

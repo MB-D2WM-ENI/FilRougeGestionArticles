@@ -10,6 +10,7 @@ class Auteur implements JsonSerializable {
     private $prenom;
     private $email;
     private $motDePasse;
+    private $role;
 
     public function __toString() {
         return $this->getPrenom() . ' ' . $this->getNom();
@@ -44,13 +45,18 @@ class Auteur implements JsonSerializable {
         $this->email = $email;
         return $this;
     }
-    public function getId(){
+    public function getId() {
         return $this->id;
     }
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
-
+        return $this;
+    }
+    public function getRole() {
+        return $this->role;
+    }
+    public function setRole($role) {
+        $this->role = $role;
         return $this;
     }
 
@@ -61,6 +67,7 @@ class Auteur implements JsonSerializable {
         $auteur->setPrenom($data['prenom'] ?? null);
         $auteur->setEmail($data['email'] ?? null);
         $auteur->setMotDePasse($data['mot_de_passe'] ?? null);
+        $auteur->setRole($data['role'] ?? null);
 
         return $auteur;
     }
@@ -71,6 +78,7 @@ class Auteur implements JsonSerializable {
             'nom' => $this->getNom(),
             'prenom' => $this->getPrenom(),
             'email' => $this->getEmail(),
+            'role' => $this->getRole(),
         ];
     }
 }

@@ -29,8 +29,34 @@
 
     <h1><?= $article->getTitre(); ?></h1>
     <p><?= $article->getContenu(); ?></p>
-    <p>Publié le <?= $article->getDatePublication(); ?></p>
+    <p>Publié le <?= $article->getDatePublication()->format('d/m/Y H:i:s'); ?></p>
     <p>Par <?= \App\Repository\AuteurRepository::findById($article->getAuteurId()); ?></p>
+
+    <div>
+        <h2>Commentaires</h2>
+
+        <?php foreach ($commentaires as $comm) : ?>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><?= \App\Repository\AuteurRepository::findById($comm->getAuteurId()); ?></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><?= $comm->getDatePublication()->format('d/m/Y H:i:s'); ?></h6>
+                    <p class="card-text"><?= $comm->getContenu(); ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <br><br>
+        <form action="/article/show/<?= $article->getId() ?>/commentaire" method="post" novalidate=novalidate>
+            <div class="mb-3">
+                <label for="contenu" class="form-label">Votre commentaire</label>
+                <textarea class="form-control <?= isset($commentaire) && $commentaire['contenu'] === '' ? 'is-invalid' : '' ?>" id="contenu" name="contenu" rows="3" required><?= $commentaire['contenu'] ?? '' ?></textarea>
+                <div class="invalid-feedback">
+                    Veuillez saisir un contenu.
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
 
     <footer>
         <img src="/assets/img/logo-eni.png"> ENI ECOLE - TP FIL ROUGE - Gestion des articles

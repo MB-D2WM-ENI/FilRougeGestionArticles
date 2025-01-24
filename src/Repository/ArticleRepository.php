@@ -20,6 +20,26 @@ class ArticleRepository
         return $articles;
     }
 
+    public static function findAllByPage(int $page = 1): array
+    {
+        $connection = Database::getInstance();
+        $sql = "SELECT * FROM articles LIMIT 10 OFFSET " . (($page - 1) * 10);
+        $articles = $connection->query($sql);
+        foreach ($articles as $key => $article) {
+            $articles[$key] = Article::hydrate($article);
+        }
+
+        return $articles;
+    }
+
+    public static function count(): int
+    {
+        $connection = Database::getInstance();
+        $sql = "SELECT COUNT(*) FROM articles";
+        $count = $connection->queryOne($sql);
+        return $count['COUNT(*)'];
+    }
+
     public static function findById(int $id): Article
     {
         $connection = Database::getInstance();

@@ -11,4 +11,12 @@ class Session {
         }
         return null;
     }
+
+    public static function hasRole($role): bool {
+        if (isset($_SESSION['auteur'])) {
+            $auteur = Auteur::hydrate(json_decode($_SESSION['auteur'], true));
+            return $auteur->getRole() === $role;
+        }
+        return false;
+    }
 }

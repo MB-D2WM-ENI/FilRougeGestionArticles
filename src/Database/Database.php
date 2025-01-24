@@ -4,8 +4,7 @@ namespace App\Database;
 
 use PDO;
 
-class Database
-{
+class Database {
     private PDO $pdo;
     private static ?Database $instance = null;
 
@@ -61,3 +60,5 @@ class Database
         $query->execute($params);
     }
 }
+
+

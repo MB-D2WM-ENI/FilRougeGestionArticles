@@ -1,4 +1,7 @@
-<?php require_once __ROOT__ . 'templates/_seo.php'; ?>
+<?php
+
+use App\Helper\Session;
+require_once __ROOT__ . 'templates/_seo.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,10 +27,35 @@
         <div class="container-fluid py-5">
             <h1 class="display-5 fw-bold">Système de Gestion d'Articles</h1>
             <p class="col-md-8 fs-4">Les articles</p>
+
+            <form action="/article/list">
+                <div class="mb-3">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Rechercher un article" value="<?= $search ?>">
+                </div>
+                <div class="mb-3">
+                    <select name="categorie_id" id="categorie_id" class="form-select">
+                        <option value="">-- Sélectionner une catégorie --</option>
+                        <?php foreach ($categories as $categorie) : ?>
+                            <option <?= (int) $categorieId === $categorie->getId() ? 'selected' : '' ?> value="<?= $categorie->getId() ?>"><?= $categorie->getTitre() ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <select name="auteur_id" id="auteur_id" class="form-select">
+                        <option value="">-- Sélectionner un auteur --</option>
+                        <?php foreach ($auteurs as $auteur) : ?>
+                            <option <?= (int) $auteurId === $auteur->getId() ? 'selected' : '' ?> value="<?= $auteur->getId() ?>"><?= $auteur->getPrenom() . ' ' . $auteur->getNom() ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <input type="submit" value="Rechercher" class="btn btn-primary">
+            </form>
         </div>
     </div>
 
-    <a href="/article/new" class="btn btn-primary">Ecrire un article</a>
+    <?php if (!Session::hasRole('lecteur')) : ?>
+        <a href="/article/new" class="btn btn-primary">Ecrire un article</a>
+    <?php endif; ?>
 
     <table class="table">
         <thead>
@@ -44,7 +72,8 @@
                 <tr>
                     <th scope="row"><?= $article->getId(); ?></th>
                     <td><?= $article->getTitre(); ?></td>
-                    <td><?= $article->getDatePublication(); ?></td>
+                    <td><?= $article->getDatePublication()->format('d/m/Y H:i:s'); ?></td>
+                    <td><?= \App\Repository\CategorieRepository::findById($article->getCategorieId()); ?></td>
                     <td><?= \App\Repository\AuteurRepository::findById($article->getAuteurId()); ?></td>
                     <td>
                         <a href="/article/show/<?= $article->getId(); ?>" class="btn btn-primary"><i class="bi bi-eye-fill"></i> Voir</a>
@@ -55,7 +84,26 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <?php if ($page > 1) : ?>
 
+                <?php endif; ?>
+                <a class="page-link" href="<?= ($page > 1) ? "/article/list/" . ($page - 1) : "#" ?>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <?php for ($i = 0; $i < $count / 10; $i++) : ?>
+                <li class="page-item <?= ($page == $i + 1) ? 'active' : '' ?>"><a class="page-link" href="/article/list/<?= $i + 1 ?>"><?= $i + 1 ?></a></li>
+            <?php endfor; ?>
+            <li class="page-item">
+                <a class="page-link" href="<?= ($page < $count / 10) ? "/article/list/" . ($page + 1) : "#" ?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <footer>
         <img src="/assets/img/logo-eni.png"> ENI ECOLE - TP FIL ROUGE - Gestion des articles
     </footer>
