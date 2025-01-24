@@ -90,15 +90,15 @@ require_once __ROOT__ . 'templates/_seo.php'; ?>
                 <?php if ($page > 1) : ?>
 
                 <?php endif; ?>
-                <a class="page-link" href="<?= ($page > 1) ? "/article/list/" . ($page - 1) : "#" ?>" aria-label="Previous">
+                <a class="page-link" href="<?= ($page > 1) ? "/article/list/" . ($page - 1) . (isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '') : "#" ?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <?php for ($i = 0; $i < $count / 10; $i++) : ?>
-                <li class="page-item <?= ($page == $i + 1) ? 'active' : '' ?>"><a class="page-link" href="/article/list/<?= $i + 1 ?>"><?= $i + 1 ?></a></li>
+                <li class="page-item <?= ($page == $i + 1) ? 'active' : '' ?>"><a class="page-link" href="/article/list/<?= ($i + 1)  . (isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '') ?>"><?= $i + 1 ?></a></li>
             <?php endfor; ?>
             <li class="page-item">
-                <a class="page-link" href="<?= ($page < $count / 10) ? "/article/list/" . ($page + 1) : "#" ?>" aria-label="Next">
+                <a class="page-link" href="<?= ($page < $count / 10) ? "/article/list/" . ($page + 1) . (isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '') : "#" ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
