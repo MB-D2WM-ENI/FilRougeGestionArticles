@@ -12,4 +12,4 @@ Création d'un site servant à gérer des articles (de type poste) en ligne :
 
 ---
 
-===================================== &copy; ENI - Tous droits réservés ====================================
+======================== &copy; ENI - Tous droits réservés ========================
